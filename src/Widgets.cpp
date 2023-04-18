@@ -86,8 +86,6 @@ void instantiateWidgets(void) {
     bground.drawLineHoriz(0,topYarea, SCREEN_WIDTH, lv_color_black());
     bground.drawLineVert(botXdivider, topYarea, SCREEN_HEIGHT-topYarea, lv_color_black());
 
-    pScreenMain->addObject(&bground);
-
     pFull = new FullnessBar;
     static H2OFullnessLabel waterLabel;
 
@@ -195,7 +193,7 @@ LEDControl::LEDControl() : lvppCycleButton("LEDControl") {
     styles.push_back(LV_SYMBOL_SHUFFLE " Fast");
 
     clearOptions();
-    addOptionsFromVector(styles);
+    addOptions(styles);
 
     currentIndex = (uint16_t)0;
     setText(options[currentIndex].c_str());
@@ -302,8 +300,8 @@ FullnessBar::FullnessBar(void) : lvppBar("H2OLevel") {
     align(LV_ALIGN_TOP_RIGHT, -19, 20);
     setRange(0,100);
 
-    setLabelFormat("%d%%");
-    enableLabel(LV_ALIGN_BOTTOM_MID, 3, 17);
+    setValueLabelFormat("%d%%");
+    enableValueLabel(0, 18, LV_ALIGN_BOTTOM_MID);
     setValue(20);
 }
 
