@@ -74,7 +74,19 @@ void instantiateWidgets(void) {
     printf("size of buffer for INDEXED 8-bit:%d\n", LV_CANVAS_BUF_SIZE_INDEXED_8BIT(320,240));
     printf("size of buffer for INDEXED 4-bit:%d\n", LV_CANVAS_BUF_SIZE_INDEXED_4BIT(320,240));
 
-    static BackgroundAreas background;
+    static lvppCanvasIndexed bground("back2", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 4);
+    const lv_coord_t topYarea = 117;
+    const lv_coord_t botXdivider = 158;
+
+    bground.addColorToIndex(lv_color_white());
+    bground.addColorToIndex(lv_color_black());
+    bground.addPaletteToIndex(LV_PALETTE_BLUE_GREY);
+
+    bground.setbgColor(lv_palette_lighten(LV_PALETTE_BLUE_GREY, 1));
+    bground.drawLineHoriz(0,topYarea, SCREEN_WIDTH, lv_color_black());
+    bground.drawLineVert(botXdivider, topYarea, SCREEN_HEIGHT-topYarea, lv_color_black());
+
+    pScreenMain->addObject(&bground);
 
     pFull = new FullnessBar;
     static H2OFullnessLabel waterLabel;
@@ -383,39 +395,3 @@ void TempGauge::setTemp(uint8_t tempValue) {
     setValue(tempValue);
     onValueChanged();
 }
-
-
-////////////////////////////////////////
-//
-//  B a c k g r o u n d A r e a s
-//
-////////////////////////////////////////
-
-BackgroundAreas::BackgroundAreas(void) : lvppCanvas("Backgnd", 0, 0, SDL_HOR_RES, SDL_VER_RES) {
-    const lv_coord_t topYarea = 117;
-    const lv_coord_t botXdivider = 158;
-
-    // Top area
-    lv_coord_t x, y;
-    lv_color_t px;
-    px.full = 1;
-    
-    lv_canvas_fill_bg(obj, px, LV_OPA_COVER);
-
-    // Black index
-    px.full = 0;
-    // Draw horizontal dividing line
-    for (x = 0; x<320; x++)
-        for (y=topYarea; y<(topYarea+4); y++)
-            lv_canvas_set_px_color(obj, x, y, px);
-
-    // Draw vertical divider in lower half of display
-    for (x = botXdivider; x<botXdivider+4; x++)
-        for (y=topYarea; y<240; y++)
-            lv_canvas_set_px_color(obj, x, y, px);
-}
-
-BackgroundAreas::~BackgroundAreas() {
-
-}
-

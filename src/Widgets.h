@@ -108,13 +108,6 @@ public:
     virtual ~CPLabel();
 };
 
-class BackgroundAreas : public lvppCanvas {
-public:
-    BackgroundAreas(void);
-    virtual ~BackgroundAreas();
-};
-
-
 class TempGauge : public lvppArc {
 public:
     TempGauge(void);
