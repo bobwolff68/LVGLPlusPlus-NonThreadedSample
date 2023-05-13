@@ -193,7 +193,7 @@ LEDControl::LEDControl() : lvppCycleButton("LEDControl") {
     styles.push_back(LV_SYMBOL_SHUFFLE " Fast");
 
     clearOptions();
-    addOptions(styles);
+    setOptions(styles);
 
     currentIndex = (uint16_t)0;
     setText(options[currentIndex].c_str());
@@ -246,7 +246,7 @@ CycleControl::CycleControl() : lvppDropdown("CycleControl") {
 
     setOptions(styles);
     setDropdownDirection(LV_DIR_TOP);
-    setCurrentIndex((uint16_t)0);
+    setSelectedIndex((uint16_t)0);
 }
 
 CycleControl::~CycleControl() {
@@ -254,7 +254,7 @@ CycleControl::~CycleControl() {
 }
 
 void CycleControl::onValueChanged() {
-    curIndex = (CycleStyle) getCurrentIndex();
+    curIndex = (CycleStyle) getSelectedIndex();
 }
 
 
